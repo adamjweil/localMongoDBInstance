@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const TitleSchema = new mongoose.Schema({
   jobTitle: {
-    type: [String],
+    type: String,
     required: true
   },
   jobDescription: {
