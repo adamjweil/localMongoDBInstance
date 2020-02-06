@@ -25,6 +25,10 @@ app.use(
 app.use(express.json({ extended: false }));
 app.get("/", (req, res) => res.send("API Running"));
 
+// Define Routes
+// (commented out because these routes havent been built out yet)
+// app.use("/api/users", require("./routes/api/users"));
+
 const PORT = process.env.PORT || 5000;
 const URL = process.env.DB_URI
 
