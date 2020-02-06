@@ -71,6 +71,12 @@ const RootQuery = new GraphQLObjectType({
         return User.findOne(args.id);
       }
     },
+    users: {
+      type: new GraphQLList(UserType),
+      resolve(parent, args) {
+        return User.find();
+      }
+    },
     team: {
       type: TeamType,
       args: { _id: { type: GraphQLID } },
@@ -78,11 +84,23 @@ const RootQuery = new GraphQLObjectType({
         return Team.findOne(args.id);
       }
     },
+    teams: {
+      type: new GraphQLList(TeamType),
+      resolve(parent, args) {
+        return Team.find();
+      }
+    },
     title: {
       type: TitleType,
       args: { _id: { type: GraphQLID } },
       resolve(parent, args) {
         return Title.findOne(args.id);
+      }
+    },
+    titles: {
+      type: new GraphQLList(TitleType),
+      resolve(parent, args) {
+        return Title.find();
       }
     }
   }
@@ -120,7 +138,24 @@ const Mutations = new GraphQLObjectType({
         title.save();
         return title;
       }
-    }
+    },
+    // signUp: {
+    //   type: UserType.
+    //   args: {
+    //     email: { type: GraphQLString },
+    //     password: { type: GraphQLString },
+    //     username: { type: GraphQL String }
+    //   },
+    //   resolve(parent, args, context, info) {
+    //     const config = {
+    //       headers: {
+    //       "Content-Type": "application/json"
+    //       }
+    //     };
+    //     const passwordHash = bcrypt.hash(password, 10);
+    //     const body = JSON.stringify({ email, passwordHash, username })
+    //   }
+    // }
   }
 });
 

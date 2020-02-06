@@ -13,7 +13,7 @@ connectDB();
 
 // GraphQL Middleware
 app.use(
-  "/graphql",
+  "/graphiql",
   graphqlHTTP({
     schema,
     graphiql: true,
