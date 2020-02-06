@@ -3,6 +3,7 @@ const User = require("../models/User");
 const Team = require("../models/Team");
 const graphql = require("graphql");
 const _ = require("lodash");
+const axios = require('axios');
 
 const {
   GraphQLObjectType,
@@ -20,6 +21,7 @@ const UserType = new GraphQLObjectType({
   fields: () => ({
     _id: { type: GraphQLID },
     email: { type: GraphQLString },
+    username: { type: GraphQLString },
     password: { type: GraphQLString },
     consented: { type: GraphQLBoolean },
     dateHired: { type: GraphQLString },
@@ -139,23 +141,27 @@ const Mutations = new GraphQLObjectType({
         return title;
       }
     },
-    // signUp: {
-    //   type: UserType.
-    //   args: {
-    //     email: { type: GraphQLString },
-    //     password: { type: GraphQLString },
-    //     username: { type: GraphQL String }
-    //   },
-    //   resolve(parent, args, context, info) {
-    //     const config = {
-    //       headers: {
-    //       "Content-Type": "application/json"
-    //       }
-    //     };
-    //     const passwordHash = bcrypt.hash(password, 10);
-    //     const body = JSON.stringify({ email, passwordHash, username })
-    //   }
-    // }
+    signUp: {
+      type: UserType,
+      args: {
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+        username: { type: GraphQLString }
+      },
+      async resolve(parent, args, context, info) {
+        const config = {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+        const username = args.username
+        const email = args.email
+        const password = args.password
+        const body = JSON.stringify({ email, password, username })
+        const res = await axios.post('/api/users', body, config)
+        return res;
+      }
+    }
   }
 });
 
