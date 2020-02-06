@@ -3,7 +3,7 @@ const graphqlHTTP = require("express-graphql");
 const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
-// const schema = require("./graphqlSchema/schema");
+const schema = require("./graphQL/schema");
 
 const app = express();
 app.use(cors());
@@ -12,14 +12,14 @@ app.use(cors());
 connectDB();
 
 // GraphQL Middleware
-// app.use(
-//   "/graphql",
-//   graphqlHTTP({
-//     schema,
-//     graphiql: true,
-//     pretty: true
-//   })
-// );
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema,
+    graphiql: true,
+    pretty: true
+  })
+);
 
 // Init Middleware
 app.use(express.json({ extended: false }));
